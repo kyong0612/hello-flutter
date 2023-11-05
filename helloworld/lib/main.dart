@@ -49,6 +49,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  String _type = '偶数';
 
   void _incrementCounter() {
     setState(() {
@@ -58,7 +59,11 @@ class _MyHomePageState extends State<MyHomePage> {
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
       _counter++;
-      print('hello world');
+      if (_counter % 2 == 0) {
+        _type = '偶数';
+      } else {
+        _type = '奇数';
+      }
     });
   }
 
@@ -69,49 +74,35 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Row(
           children: const [
             Icon(Icons.create),
-            Text('初めてのタイトル'),
+            Text('カウンター'),
           ],
         ),
       ),
-      body: Column(
-        children: [
-          const Text('hello world'),
-          const Text('ハローワールド'),
-          TextButton(
-            onPressed: () => {print('ボタンが押された！')},
-            child: const Text('ボタン'),
-          ),
-          Row(
-              // MainAxisAlignment.spaceAroundは列の要素を等間隔で配置する
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: const [
-                Icon(
-                  Icons.favorite,
-                  color: Colors.pink,
-                  size: 24.0,
-                ),
-                Icon(
-                  Icons.audiotrack,
-                  color: Colors.green,
-                  size: 30.0,
-                ),
-                Icon(
-                  Icons.beach_access,
-                  color: Colors.blue,
-                  size: 36.0,
-                ),
-              ]),
-        ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text(
+              'you have pushed the button this many times:',
+            ),
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headline4,
+            ),
+            if (_counter % 2 == 0)
+              const Text(
+                '偶数です',
+                style: TextStyle(fontSize: 20, color: Colors.red),
+              ),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => {print('押したね？')},
+        onPressed: _incrementCounter,
         child: const Icon(Icons.timer),
       ),
       drawer: const Drawer(
-        child: const Center(child: Text("Drawer")),
-      ),
-      endDrawer: const Drawer(
-        child: Center(child: Text("EndDrawer")),
+        child: Center(child: Text("Drawer")),
       ),
     );
   }
