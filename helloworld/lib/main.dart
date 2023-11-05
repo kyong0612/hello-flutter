@@ -66,12 +66,13 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Row(
-        children: const [
-          Icon(Icons.create),
-          Text('初めてのタイトル'),
-        ],
-      )),
+        title: Row(
+          children: const [
+            Icon(Icons.create),
+            Text('初めてのタイトル'),
+          ],
+        ),
+      ),
       body: Column(
         children: [
           const Text('hello world'),
@@ -105,6 +106,12 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () => {print('押したね？')},
         child: const Icon(Icons.timer),
+      ),
+      drawer: const Drawer(
+        child: const Center(child: Text("Drawer")),
+      ),
+      endDrawer: const Drawer(
+        child: Center(child: Text("EndDrawer")),
       ),
     );
   }
