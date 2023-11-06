@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'test_page1.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,40 +31,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  String _type = '偶数';
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-      if (_counter % 2 == 0) {
-        _type = '偶数';
-      } else {
-        _type = '奇数';
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: const [
-            Icon(Icons.create),
-            Text('カウンター'),
-          ],
-        ),
-      ),
-      body:
-          const Center(child: Icon(FontAwesomeIcons.gift, color: Colors.teal)),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        child: const Icon(Icons.timer),
-      ),
-      drawer: const Drawer(
-        child: Center(child: Text("Drawer")),
-      ),
+      body: TestPage1(),
     );
   }
 }
