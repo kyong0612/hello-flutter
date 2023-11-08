@@ -31,8 +31,9 @@ dependencies:
   flutter:
     sdk: flutter
   font_awesome_flutter: ^10.3.0
-  image_picker: ^0.8.5+3
-  video_player: ^2.4.5
+  # image_picker: ^0.8.5+3
+  # video_player: ^2.4.5
+  geolocator: ^9.0.0
 
 
   # The following adds the Cupertino Icons font to your application.
