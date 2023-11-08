@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:helloworld/test_page2.dart';
 import 'package:helloworld/test_page3.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:video_player/video_player.dart';
 import 'test_page1.dart';
 
 void main() {
@@ -36,52 +37,59 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  XFile? _image;
+  VideoPlayerController? _controller;
   final imagePicker = ImagePicker();
 
-  // カメラから写真を取得するメソッド
-  Future getImageFromCamera() async {
-    final pickedFile = await imagePicker.pickImage(source: ImageSource.camera);
-    setState(() {
-      if (pickedFile != null) {
-        _image = XFile(pickedFile.path);
-      }
-    });
+  // カメラから動画を取得するメソッド
+  Future getVideoFromCamera() async {
+    XFile? pickedFile = await imagePicker.pickVideo(source: ImageSource.camera);
+    if (pickedFile != null) {
+      _controller = VideoPlayerController.file(File(pickedFile.path));
+      _controller!.initialize().then((_) {
+        setState(() {
+          _controller!.play();
+        });
+      });
+    }
   }
 
-  // ギャラリーから写真を取得するメソッド
-  Future getImageFromGallery() async {
-    final pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      if (pickedFile != null) {
-        _image = XFile(pickedFile.path);
-      }
-    });
+  // ギャラリーから動画を取得するメソッド
+  Future getVideoFromGallery() async {
+    XFile? pickedFile =
+        await imagePicker.pickVideo(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      _controller = VideoPlayerController.file(File(pickedFile.path));
+      _controller!.initialize().then((_) {
+        setState(() {
+          _controller!.play();
+        });
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blueGrey,
       appBar: AppBar(
         title: Text(widget.title),
       ),
       body: Center(
-          child: _image == null
-              ? Text(
-                  '写真を選択してください',
-                  style: Theme.of(context).textTheme.headline4,
+          child: _controller == null
+              ? const Text(
+                  '動画を選択してください',
                 )
-              : Image.file(File(_image!.path))),
+              : VideoPlayer(_controller!)),
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           // カメラから取得するボタン
           FloatingActionButton(
-            onPressed: getImageFromCamera,
+            onPressed: getVideoFromCamera,
             child: const Icon(Icons.photo_camera),
           ),
           FloatingActionButton(
-            onPressed: getImageFromGallery,
+            onPressed: getVideoFromGallery,
             child: const Icon(Icons.photo_album),
           )
         ],
