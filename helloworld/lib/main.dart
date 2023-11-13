@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sensors_plus/sensors_plus.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,8 +31,22 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String _userAccelerometerValues = "";
-  String _gyroscopeValues = "";
+  FlutterTts flutterTts = FlutterTts();
+  final String _speakText =
+      "寿限無、寿限無、五劫の擦り切れ 海砂利水魚（かいじゃりすいぎょ） の水行末 雲来末 風来末、 食う寝る処に住む処 やぶら小路の藪柑子 パイポ パイポ パイポのシューリンガン シューリンガンのグーリンダイ、 グーリンダイのポンポコピーのポンポコナーの 長久命の長助";
+
+  Future<void> _speak() async {
+    const String _lang = "ja-JP";
+    await flutterTts.setLanguage(_lang);
+    await flutterTts.setSpeechRate(1.0);
+    await flutterTts.setVolume(1.0);
+    await flutterTts.setPitch(1.0);
+    await flutterTts.speak(_speakText);
+  }
+
+  Future<void> _stop() async {
+    await flutterTts.stop();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,35 +54,30 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Text(
-            _userAccelerometerValues,
-            style: Theme.of(context).textTheme.titleLarge,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              _speakText,
+              style: Theme.of(context).textTheme.headlineSmall,
+            )
+          ],
+        ),
+      ),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            onPressed: _speak,
+            child: const Icon(Icons.play_arrow),
           ),
-          Text(
-            _gyroscopeValues,
-            style: Theme.of(context).textTheme.titleLarge,
+          FloatingActionButton(
+            onPressed: _stop,
+            child: const Icon(Icons.stop),
           )
         ],
       ),
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    userAccelerometerEvents.listen((UserAccelerometerEvent event) {
-      setState(() {
-        _userAccelerometerValues =
-            "加速度センサー\n${event.x}\n${event.y}\n${event.z}";
-      });
-    });
-    gyroscopeEvents.listen((GyroscopeEvent event) {
-      setState(() {
-        _gyroscopeValues = "ジャイロセンサー\n${event.x}\n${event.y}\n${event.z}";
-      });
-    });
   }
 }
