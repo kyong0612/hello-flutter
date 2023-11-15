@@ -59,5 +59,16 @@
 	<string>音声認識を利用する理由を記載</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>マイクを利用する理由を記載</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+	    <dict>
+	        <key>CFBundleTypeRole</key>
+	        <string>Editor</string>
+	        <key>CFBundleURLSchemes</key>
+	        <array>
+	            <string>com.googleusercontent.apps.655209479941-q8r6547irqcke0p8psobiqdbrpe38cbi</string>
+	        </array>
+	    </dict>
+	</array>
 </dict>
 </plist>
